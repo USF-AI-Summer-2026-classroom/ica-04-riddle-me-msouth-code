@@ -6,6 +6,7 @@ low_level, joker, penguin, riddler = vars("low_level", "joker", "penguin", "ridd
 # clue variables
 acid_burn, playing_cards, joy_buzzer, umbrella_mark, riddle, puzzle, word_game = vars("acid_burns", "playing_cards", "joy_buzzer", "umbrella_mark", "riddle", "puzzle", "word_game")
 
+hole = Variable("hole")
 
 premises = [
     # at least one of these suspects
@@ -13,17 +14,15 @@ premises = [
 
     # based on crime clue and type
     joker >> (acid_burn | playing_cards | joy_buzzer),
-    penguin >> umbrella_mark,
+    penguin >> (umbrella_mark),
     riddler >> (riddle | puzzle | word_game),
 
-    # was do we know is NOT true; Batman found whole that can be from umbrella or acid
-    ~acid_burn,
-    ~umbrella_mark,
-    ~playing_cards,
-    ~joy_buzzer,
-    ~riddle,
-    ~puzzle,
-    ~word_game
+    hole,
+
+    hole >> (acid_burn | umbrella_mark),
+
+    # what do we know is NOT true; Batman found whole that can be from umbrella or acid
+    ~ (playing_cards | joy_buzzer | riddle | puzzle | word_game)
 ]
 
 
